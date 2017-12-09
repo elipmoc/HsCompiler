@@ -26,4 +26,7 @@ data Exp =
 executeExp :: Exp -> Int
 executeExp (NumExp i) = i
 executeExp (OpExp e1 Plus e2) = (executeExp e1)+(executeExp e2) 
+executeExp (OpExp e1 Minus e2) = (executeExp e1)-(executeExp e2) 
+executeExp (OpExp e1 Times e2) = (executeExp e1)*(executeExp e2) 
+executeExp (OpExp e1 Div e2) = (executeExp e1) `div` (executeExp e2) 
 executeExp (EseqExp _ e) = executeExp e
