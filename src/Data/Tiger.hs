@@ -1,5 +1,7 @@
 module Data.Tiger where
 
+import Data.Map
+
 type Id =String
 
 data Binop =Plus | Minus | Times | Div deriving Show
