@@ -1,30 +1,30 @@
 module Main where
 
-import Data.Tiger
-import Lib
+import           Data.Tiger
+import           Lib
 
 prog =
     CompoundStm
         (
-            AssignStm 
-                "a" 
-                (OpExp (NumExp 5) Plus (NumExp 3)) 
+            AssignStm
+                "a"
+                (OpExp (NumExp 5) Plus (NumExp 3))
         )
         (
             CompoundStm
                 (
-                    AssignStm 
-                        "b" 
+                    AssignStm
+                        "b"
                         (
-                            EseqExp 
+                            EseqExp
                                 (PrintStm [IdExp "a",OpExp (IdExp "a") Minus (NumExp 1)])
                                 (OpExp (NumExp 10) Times (IdExp "a"))
                         )
                 )
                 ( PrintStm [IdExp "b"])
         )
-    
+
 main :: IO ()
-main = do 
+main = do
     print prog
     print testMap
