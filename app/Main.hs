@@ -25,4 +25,6 @@ prog =
         )
     
 main :: IO ()
-main = print prog
+main = do 
+    print prog
+    print testMap

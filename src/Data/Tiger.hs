@@ -1,6 +1,9 @@
 module Data.Tiger where
 
-import Data.Map
+import qualified Data.Map.Strict as Map
+
+testMap :: Map.Map Char Int
+testMap = Map.singleton 'v' 45
 
 type Id =String
 
