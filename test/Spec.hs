@@ -12,7 +12,9 @@ main =do
     return ()
 
 executeExpTestHelper :: Exp->Int
-executeExpTestHelper e = evalState (executeExp e) (Map.singleton "a" 7 ::VariableMap)
+executeExpTestHelper e =
+    case evalState (executeExp e) (Map.singleton "a" 45 ::VariableMap) of
+        (_,int) -> int
 
 executeExpTest :: Test
 executeExpTest = TestList
@@ -29,6 +31,6 @@ executeExpTest = TestList
         "executeExp test 6" ~:
             executeExpTestHelper ( EseqExp (PrintStm [NumExp 114]) (NumExp 7) ) ~?= 7 ,
         "executeExp test 7" ~:
-            executeExpTestHelper (IdExp "a")  ~?= 7
+            executeExpTestHelper (IdExp "a")  ~?= 45
 
     ]

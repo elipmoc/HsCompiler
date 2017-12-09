@@ -26,5 +26,4 @@ prog =
 
 main :: IO ()
 main = do
-    print prog
-    print testMap
+    runStm prog
