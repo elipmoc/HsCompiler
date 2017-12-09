@@ -21,3 +21,7 @@ data Exp =
     | OpExp Exp Binop Exp
     | EseqExp Stm Exp 
     deriving Show
+
+--式を実行して結果を得る
+executeExp :: Exp -> Int
+executeExp =undefined
