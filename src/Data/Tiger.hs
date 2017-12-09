@@ -24,4 +24,6 @@ data Exp =
 
 --式を実行して結果を得る
 executeExp :: Exp -> Int
-executeExp =undefined
+executeExp (NumExp i) = i
+executeExp (OpExp e1 Plus e2) = (executeExp e1)+(executeExp e2) 
+executeExp (EseqExp _ e) = executeExp e
