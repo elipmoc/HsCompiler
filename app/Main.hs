@@ -25,5 +25,4 @@ prog =
         )
 
 main :: IO ()
-main = do
-    runStm prog
+main = runStm prog

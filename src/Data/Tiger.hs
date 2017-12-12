@@ -12,6 +12,7 @@ type PrintStr = [String]
 
 data Binop = Plus | Minus | Times | Div deriving Show
 
+--抽象構文のためのデータ構造
 data Stm =
     CompoundStm Stm Stm
     | AssignStm Id Exp
@@ -25,6 +26,7 @@ data Exp =
     | EseqExp Stm Exp
     deriving Show
 
+--二項演算子の結びつけ
 binopFunc::Binop->(Int->Int->Int)
 binopFunc Plus  = (+)
 binopFunc Minus = (-)
@@ -57,7 +59,7 @@ executeStm (AssignStm id exp) = do
     (strList,v) <- executeExp exp
     put $ Map.insert id v vmap
     return strList
-executeStm (PrintStm exps) = do
+executeStm (PrintStm exps) =
     foldM
         (
             \a b -> do
