@@ -25,25 +25,19 @@ data Exp =
     | EseqExp Stm Exp
     deriving Show
 
+binopFunc::Binop->(Int->Int->Int)
+binopFunc Plus  = (+)
+binopFunc Minus = (-)
+binopFunc Times = (*)
+binopFunc Div   = div
+
 --式を実行して結果を得る
 executeExp :: Exp -> State VariableMap (PrintStr,Int)
 executeExp (NumExp i) = return ([],i)
-executeExp (OpExp e1 Plus e2) = do
+executeExp (OpExp e1 binop e2) = do
     (strList1,v1) <- executeExp e1
     (strList2,v2) <- executeExp e2
-    return (strList1++strList2,v1 + v2)
-executeExp (OpExp e1 Minus e2) = do
-    (strList1,v1) <- executeExp e1
-    (strList2,v2) <- executeExp e2
-    return (strList1++strList2,v1 - v2)
-executeExp (OpExp e1 Times e2) = do
-    (strList1,v1) <- executeExp e1
-    (strList2,v2) <- executeExp e2
-    return (strList1++strList2,v1 * v2)
-executeExp (OpExp e1 Div e2) = do
-    (strList1,v1) <- executeExp e1
-    (strList2,v2) <- executeExp e2
-    return (strList1++strList2,v1 `div` v2)
+    return (strList1++strList2,binopFunc binop v1 v2)
 executeExp (IdExp id) = do
     vmap <- get
     return ([],fromJust $ Map.lookup id vmap)
