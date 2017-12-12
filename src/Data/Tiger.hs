@@ -3,6 +3,8 @@ module Data.Tiger where
 import           Control.Monad.State
 import qualified Data.Map.Strict     as Map
 import           Data.Maybe
+import qualified Text.Parsec         as P
+
 
 type Id =String
 
