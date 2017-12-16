@@ -46,4 +46,6 @@ parseStmTest :: Test
 parseStmTest =TestList
     [
         "parseStm test 1" ~: unParseStm "a=5" ~?= AssignStm "a" (NumExp 5)
+        ,"parseStm test 2" ~: unParseStm "b=4+5*6/2" ~?=
+            AssignStm "b" (OpExp (NumExp 4) Plus (OpExp (NumExp 5) Times (OpExp (NumExp 6) Div (NumExp 2))))
     ]
