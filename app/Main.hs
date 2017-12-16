@@ -1,6 +1,6 @@
 module Main where
 
-import           Data.Tiger
+import           Interpreter
 
 
 main :: IO ()

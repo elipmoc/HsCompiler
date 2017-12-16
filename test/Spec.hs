@@ -1,6 +1,7 @@
 import           Control.Monad.State
 import qualified Data.Map.Strict     as Map
-import           Data.Tiger
+import           Interpreter
+import           Parser
 import           Test.HUnit
 
 main :: IO ()
@@ -34,3 +35,8 @@ executeExpTest = TestList
             executeExpTestHelper (IdExp "a")  ~?= 45
 
     ]
+
+unParseStm :: String -> Stm
+unParseStm s = case parseStm s of
+    Right x -> x
+    Left x  -> error $ show x

@@ -1,4 +1,4 @@
-module Data.Tiger where
+module  Interpreter where
 
 import           Control.Monad.State
 import qualified Data.Map.Strict     as Map
