@@ -12,21 +12,21 @@ type VariableMap = Map.Map Id Int
 
 type PrintStr = [String]
 
-data Binop = Plus | Minus | Times | Div deriving Show
+data Binop = Plus | Minus | Times | Div deriving (Show,Eq)
 
 --抽象構文のためのデータ構造
 data Stm =
     CompoundStm Stm Stm
     | AssignStm Id Exp
     | PrintStm [Exp]
-    deriving Show
+    deriving (Show,Eq)
 
 data Exp =
     IdExp Id
     | NumExp Int
     | OpExp Exp Binop Exp
     | EseqExp Stm Exp
-    deriving Show
+    deriving (Show,Eq)
 
 --二項演算子の結びつけ
 binopFunc::Binop->(Int->Int->Int)

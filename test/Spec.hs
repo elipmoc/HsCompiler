@@ -9,6 +9,7 @@ main =do
     runTestTT $ TestList
         [
             executeExpTest
+            ,parseStmTest
         ]
     return ()
 
@@ -40,3 +41,9 @@ unParseStm :: String -> Stm
 unParseStm s = case parseStm s of
     Right x -> x
     Left x  -> error $ show x
+
+parseStmTest :: Test
+parseStmTest =TestList
+    [
+        "parseStm test 1" ~: unParseStm "a=5" ~?= AssignStm "a" (NumExp 5)
+    ]
