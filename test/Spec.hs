@@ -69,4 +69,8 @@ parseStmTest =TestList
                     Minus
                     (NumExp 1)
                 )
+        ,"parseStm test 3" ~: unParseStm "print(5+1)" ~?=
+            PrintStm [(OpExp (NumExp 5) Plus (NumExp 1))]
+        ,"parseStm test 4" ~: unParseStm "print(5,4,3)" ~?=
+            PrintStm [(NumExp 5) ,(NumExp 4) ,(NumExp 3) ]
     ]
