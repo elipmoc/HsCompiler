@@ -11,31 +11,16 @@ import qualified Text.Parsec.Expr       as E
 import           Text.Parsec.Prim       (parse, try)
 import           Text.Parsec.String     (Parser)
 
---パーサの簡易実行と出力をする関数
-run::Show a => Parser a -> String -> IO ()
-run p input =
-    case parse p "hoge" input of
-        Left err ->
-            putStr "parse error at" >> print err
-        Right x  -> print x
-
 --パースを実行する
 parseStm :: String -> Either ParseError Stm
 parseStm = parse parserStm ""
 
 parserStm :: Parser Stm
 parserStm =
-    try (do
-        stm <- parserStm2
-        eof
-        return stm)
-    <|> parserCompoundStm
+    try (parserStm2 <* eof) <|> parserCompoundStm
 
 parserStm2 :: Parser Stm
-parserStm2 =do
-        stm <- (try parserAssignStm <|> parserPrintStm)
-        char ';'
-        return stm
+parserStm2 = (try parserAssignStm <|> parserPrintStm) <* char ';'
 
 parserCompoundStm :: Parser Stm
 parserCompoundStm = CompoundStm <$> parserStm2 <*> parserStm
@@ -74,10 +59,7 @@ opTable =
     ]
   where
     binary name =
-        E.Infix
-            (
-                mkBinOp <$> parserBinop name
-            )
+        E.Infix $ mkBinOp <$> parserBinop name
     mkBinOp op a b = OpExp a op b
 
 parserBinop :: String -> Parser Binop
