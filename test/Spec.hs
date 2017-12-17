@@ -34,7 +34,6 @@ executeExpTest = TestList
             executeExpTestHelper ( EseqExp (PrintStm [NumExp 114]) (NumExp 7) ) ~?= 7 ,
         "executeExp test 7" ~:
             executeExpTestHelper (IdExp "a")  ~?= 45
-
     ]
 
 unParseStm :: String -> Stm
@@ -45,8 +44,8 @@ unParseStm s = case parseStm s of
 parseStmTest :: Test
 parseStmTest =TestList
     [
-        "parseStm test 1" ~: unParseStm "a:=5" ~?= AssignStm "a" (NumExp 5)
-        ,"parseStm test 2" ~: unParseStm "b:=4+5*6/2-1" ~?=
+        "parseStm test 1" ~: unParseStm "a:=5;" ~?= AssignStm "a" (NumExp 5)
+        ,"parseStm test 2" ~: unParseStm "b:=4+5*6/2-1;" ~?=
             AssignStm "b"
                 (
                     OpExp
@@ -69,8 +68,10 @@ parseStmTest =TestList
                     Minus
                     (NumExp 1)
                 )
-        ,"parseStm test 3" ~: unParseStm "print(5+1)" ~?=
+        ,"parseStm test 3" ~: unParseStm "print(5+1);" ~?=
             PrintStm [(OpExp (NumExp 5) Plus (NumExp 1))]
-        ,"parseStm test 4" ~: unParseStm "print(5,4,3)" ~?=
+        ,"parseStm test 4" ~: unParseStm "print(5,4,3);" ~?=
             PrintStm [(NumExp 5) ,(NumExp 4) ,(NumExp 3) ]
+        ,"parseStm test 5" ~: unParseStm "a:=79;print(5);" ~?=
+            CompoundStm (AssignStm "a" (NumExp 79)) (PrintStm [(NumExp 5)])
     ]

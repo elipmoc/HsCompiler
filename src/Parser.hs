@@ -5,7 +5,7 @@ import           Control.Monad
 import           Control.Monad.Identity
 import           Interpreter
 import           Text.Parsec.Char       (char, digit, letter, string)
-import           Text.Parsec.Combinator (many1, sepBy)
+import           Text.Parsec.Combinator (eof, many1, sepBy)
 import           Text.Parsec.Error      (ParseError)
 import qualified Text.Parsec.Expr       as E
 import           Text.Parsec.Prim       (parse, try)
@@ -24,7 +24,21 @@ parseStm :: String -> Either ParseError Stm
 parseStm = parse parserStm ""
 
 parserStm :: Parser Stm
-parserStm = try parserAssignStm <|> parserPrintStm
+parserStm =
+    try (do
+        stm <- parserStm2
+        eof
+        return stm)
+    <|> parserCompoundStm
+
+parserStm2 :: Parser Stm
+parserStm2 =do
+        stm <- (try parserAssignStm <|> parserPrintStm)
+        char ';'
+        return stm
+
+parserCompoundStm :: Parser Stm
+parserCompoundStm = CompoundStm <$> parserStm2 <*> parserStm
 
 parserAssignStm :: Parser Stm
 parserAssignStm = AssignStm <$> parserId <* string ":=" <*> parserExpr
