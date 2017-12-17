@@ -45,8 +45,8 @@ unParseStm s = case parseStm s of
 parseStmTest :: Test
 parseStmTest =TestList
     [
-        "parseStm test 1" ~: unParseStm "a=5" ~?= AssignStm "a" (NumExp 5)
-        ,"parseStm test 2" ~: unParseStm "b=4+5*6/2-1" ~?=
+        "parseStm test 1" ~: unParseStm "a:=5" ~?= AssignStm "a" (NumExp 5)
+        ,"parseStm test 2" ~: unParseStm "b:=4+5*6/2-1" ~?=
             AssignStm "b"
                 (
                     OpExp

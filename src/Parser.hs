@@ -24,7 +24,7 @@ parseStm :: String -> Either ParseError Stm
 parseStm = parse parserAssignStm ""
 
 parserAssignStm :: Parser Stm
-parserAssignStm = AssignStm <$> parserId <* char '=' <*> parserExpr
+parserAssignStm = AssignStm <$> parserId <* string ":=" <*> parserExpr
 
 parserId :: Parser Id
 parserId =  many1 letter
@@ -38,12 +38,12 @@ opTable :: [[E.Operator String () Identity Exp]]
 opTable =
     [
         [
-            binary '*' E.AssocLeft
-            ,binary '/' E.AssocLeft
+            binary "*" E.AssocLeft
+            ,binary "/" E.AssocLeft
          ]
         ,[
-            binary '+' E.AssocLeft
-            ,binary '-' E.AssocLeft
+            binary "+" E.AssocLeft
+            ,binary "-" E.AssocLeft
          ]
     ]
   where
@@ -54,11 +54,11 @@ opTable =
             )
     mkBinOp op a b = OpExp a op b
 
-parserBinop :: Char -> Parser Binop
-parserBinop '+'=char '+' >> return Plus
-parserBinop '-'=char '-' >> return Minus
-parserBinop '*'=char '*' >> return Times
-parserBinop '/'=char '/' >> return Div
+parserBinop :: String -> Parser Binop
+parserBinop "+"=char '+' >> return Plus
+parserBinop "-"=char '-' >> return Minus
+parserBinop "*"=char '*' >> return Times
+parserBinop "/"=char '/' >> return Div
 
 parserExpr :: Parser Exp
 parserExpr = E.buildExpressionParser opTable parserNumExp
