@@ -1,11 +1,17 @@
 module Main where
 
 import           Interpreter
+import           Parser
+import           System.Environment
 
 
 main :: IO ()
-main =
-    runStm prog
+main =do
+    (s:_) <- getArgs
+    case parseStm s of
+        Left x  -> print x
+        Right x -> runStm x
+--    runStm prog
     where prog =
             CompoundStm
             (
