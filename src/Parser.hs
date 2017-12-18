@@ -40,6 +40,11 @@ parserArgsExp = parserExpr `sepBy` (char ',')
 parserId :: Parser Id
 parserId =  many1 letter
 
+parserTermExp :: Parser Exp
+parserTermExp =
+    IdExp <$> parserId
+    <|> parserNumExp
+
 parserNumExp :: Parser Exp
 parserNumExp = do
     numStr <- many1 digit
@@ -69,5 +74,5 @@ parserBinop "*"=char '*' >> return Times
 parserBinop "/"=char '/' >> return Div
 
 parserExpr :: Parser Exp
-parserExpr = E.buildExpressionParser opTable parserNumExp
+parserExpr = E.buildExpressionParser opTable parserTermExp
 
