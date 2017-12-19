@@ -35,7 +35,7 @@ parserPrintStm = do
     PrintStm <$> parserArgsExp <* char ')'
 
 parserArgsExp :: Parser [Exp]
-parserArgsExp = parserExpr `sepBy` (char ',')
+parserArgsExp = parserExpr `sepBy` char ','
 
 parserId :: Parser Id
 parserId =  many1 letter

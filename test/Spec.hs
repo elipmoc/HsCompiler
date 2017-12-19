@@ -69,17 +69,17 @@ parseStmTest =TestList
                     (NumExp 1)
                 )
         ,"parseStm test 3" ~: unParseStm "print(5+1);" ~?=
-            PrintStm [(OpExp (NumExp 5) Plus (NumExp 1))]
+            PrintStm [OpExp (NumExp 5) Plus (NumExp 1)]
         ,"parseStm test 4" ~: unParseStm "print(5,4,3);" ~?=
-            PrintStm [(NumExp 5) ,(NumExp 4) ,(NumExp 3) ]
+            PrintStm [NumExp 5 ,NumExp 4 ,NumExp 3 ]
         ,"parseStm test 5" ~: unParseStm "a:=79;print(5);" ~?=
-            CompoundStm (AssignStm "a" (NumExp 79)) (PrintStm [(NumExp 5)])
+            CompoundStm (AssignStm "a" (NumExp 79)) (PrintStm [NumExp 5])
         ,"parseStm test 6" ~: unParseStm "a:=5;b:=2;print(a+b);" ~?=
             CompoundStm
                 (AssignStm "a" (NumExp 5))
                 (
                     CompoundStm
                         (AssignStm "b" (NumExp 2))
-                        (PrintStm [(OpExp (IdExp "a") Plus (IdExp "b"))])
+                        (PrintStm [OpExp (IdExp "a") Plus (IdExp "b")])
                 )
     ]
